@@ -4,9 +4,9 @@
 			"name": "Amy",
 			"gender": "female",
 			"feedCount": 120
-		},
-	"relationship": {
-		"2011-Q1": {
+	},
+	"relationship-like": {
+		"2012-Q1": {
 			"friend" :[
 				{
 					"id": "654321",
@@ -19,6 +19,12 @@
 				...
 			]
 		},
+		...
+	}, 
+	"relationship-comment": {
+		...
+	},
+	"relationship-total": {
 		...
 	}
 }
