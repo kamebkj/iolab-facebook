@@ -1,22 +1,24 @@
 {
-	"Q1": {
-		"user": {
+	"user": {
 			"id": "123456",
 			"name": "Amy",
 			"gender": "female",
 			"feedCount": 120
 		},
-		"friend" :[
-			{
-				"id": "654321",
-				"name": "Bob",
-				"gender": "male",
-				"feedCount": 80,
-				"likeCount": 40,
-				"commentCount": 60
-			},
-			...
-		]
-	},
-	...
+	"relationship": {
+		"2011-Q1": {
+			"friend" :[
+				{
+					"id": "654321",
+					"name": "Bob",
+					"gender": "male",
+					"feedCount": 80,
+					"likeCount": 40,
+					"commentCount": 60
+				},
+				...
+			]
+		},
+		...
+	}
 }
