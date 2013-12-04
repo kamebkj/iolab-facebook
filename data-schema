@@ -2,11 +2,13 @@
 	"user": {
 			"id": "123456",
 			"name": "Amy",
-			"gender": "female",
-			"feedCount": 120
+			"gender": "female"
 	},
 	"relationship-like": {
 		"2012-Q1": {
+			"user": {
+				"feedCount": 120
+			},
 			"friend" :[
 				{
 					"id": "654321",
