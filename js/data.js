@@ -7,7 +7,7 @@ data = {
 	"relationship-like": {
 		"2012-Q1": {
 			"user": {
-				"feedCount": 50
+				"feedCount": 100
 			},
 			"friend" :[
 				{
@@ -16,7 +16,7 @@ data = {
 					"gender": "male",
 					"feedCount": 80,
 					"likeCount": 40,
-					"commentCount": 60
+					"commentCount": 50
 				},
 				{
 					"id": "1001",
