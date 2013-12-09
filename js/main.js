@@ -1,8 +1,9 @@
 
 // Set svg size and margin
-var margin = {top: 20, right: 80, bottom: 80, left: 80},
+var margin = {top: 100, right: 80, bottom: 80, left: 80},
     width = 960 - margin.left - margin.right,
     height = 700 - margin.top - margin.bottom;
+var distance_radius = 250;
 
 // Initial variables for storing categories
 var arrayTime = ["2013-Q3", "2013-Q4"];
@@ -16,10 +17,6 @@ var svg = d3.select("#viz-container").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// First time loading
-// updateGraph();
-firstTimeGraph();
-
 var feed = [];
 var feedScale;
 var user_feed = [];
@@ -27,6 +24,10 @@ var user_circle;
 var friend_circle_g;
 var friend_circle;
 var friend_name;
+
+var color = d3.scale.ordinal()
+    .range(["#5790BE","#CA5D59"]) 
+    .domain(["male","female"]);
 
 // Add event listener
 $(".timerange").on("click", function(){
@@ -37,6 +38,9 @@ $(".category").on("click", function(){
   updateCategory(this.id);
 });
 
+// First time loading
+// updateGraph();
+firstTimeGraph();
 
 // Update Functions
 function updateTime(time_num) {
@@ -67,7 +71,7 @@ function firstTimeGraph() {
   }
   feedScale = d3.scale.linear()
     .domain([d3.min(feed), d3.max(feed)])
-    .range([5,20]);
+    .range([5,15]);
 
   // Create User circle data
   user_feed = [];
@@ -107,7 +111,10 @@ function firstTimeGraph() {
       "r": function(d,i) {
         return feedScale(d);
       },
-      "fill": "#f00"
+      "fill": function(d,i) {
+        if (typeof all_data["user"].gender!=="undefined") return color(all_data["user"].gender);
+        else return "#ccc";
+      }
     });
 
   // Friend circles
@@ -119,8 +126,8 @@ function firstTimeGraph() {
     // .attr("text-anchor", "middle")
     .attr({
       "transform": function(d,i) {
-        var x = (200*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.cos((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + width/2;
-        var y = (200*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.sin((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + height/2;
+        var x = (distance_radius*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.cos((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + width/2;
+        var y = (distance_radius*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.sin((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + height/2;
         var rotation = 360/all_data[currentCategory][currentTime]["friends"].length*(i);
         if (rotation>90 && rotation<270) {
           rotation = rotation+180;
@@ -140,7 +147,10 @@ function firstTimeGraph() {
       "r": function(d,i) {
         return feedScale(d.feedCount);
       },
-      "fill": "#000"
+      "fill": function(d,i) {
+        if (typeof d.gender!=="undefined") return color(d.gender);
+        else return "#ccc";
+      }
     });
 
   friend_name = friend_circle_g.append("text")
@@ -157,6 +167,7 @@ function firstTimeGraph() {
       return d.name;
     });
 }
+
 
 function updateGraph() {
   feed = [];
@@ -187,7 +198,10 @@ function updateGraph() {
       "r": function(d,i) {
         return feedScale(d);
       },
-      "fill": "#f00"
+      "fill": function(d,i) {
+        if (typeof all_data["user"].gender!=="undefined") return color(all_data["user"].gender);
+        else return "#ccc";
+      }
     });
 
   user_circle.transition()
@@ -207,8 +221,8 @@ function updateGraph() {
     .enter().append("g")
     .attr({
       "transform": function(d,i) {
-        var x = (200*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.cos((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + width/2;
-        var y = (200*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.sin((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + height/2;
+        var x = (distance_radius*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.cos((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + width/2;
+        var y = (distance_radius*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.sin((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + height/2;
         var rotation = 360/all_data[currentCategory][currentTime]["friends"].length*(i);
         if (rotation>90 && rotation<270) {
           rotation = rotation+180;
@@ -227,16 +241,21 @@ function updateGraph() {
   friend_circle.exit().transition(400)
     .attr("r",0)
     .remove();
-
-  friend_circle = friend_circle_g.append("circle").transition()
+  friend_circle = friend_circle_g.append("circle");
+  friend_circle.attr({
+    "fill": function(d,i) {
+      if (typeof d.gender!=="undefined") return color(d.gender);
+      else return "#ccc";
+    }
+  });
+  friend_circle.transition()
     .duration(400)
     .attr({
       "cx": 0,
       "cy": 0,
       "r": function(d,i) {
         return feedScale(d.feedCount);
-      },
-      "fill": "#000"
+      }
     });
 
 
@@ -245,8 +264,8 @@ function updateGraph() {
     .duration(400)
     .attr({
       "transform": function(d,i) {
-        var x = (200*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.cos((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + width/2;
-        var y = (200*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.sin((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + height/2;
+        var x = (distance_radius*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.cos((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + width/2;
+        var y = (distance_radius*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.sin((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + height/2;
         var rotation = 360/all_data[currentCategory][currentTime]["friends"].length*(i);
         if (rotation>90 && rotation<270) {
           rotation = rotation+180;
