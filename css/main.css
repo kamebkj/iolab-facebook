@@ -3,3 +3,14 @@ body {
   font-family: "Roboto",  sans-serif;
   background-color: #ccc;*/
 }
+
+#slider {
+	width: 200px;
+	margin-top: 50px;
+	margin-left: 50px;
+}
+
+#timerange-label ul li{
+	padding-right: 100px;
+	display: inline;
+}

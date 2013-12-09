@@ -10,6 +10,25 @@ var arrayTime = ["2013-Q3", "2013-Q4"];
 var currentCategory = "relationship-like";
 var currentTime = "2013-Q3";
 
+// Add a slider 
+var select = $( "#timerange" );
+var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
+  min: 0,
+  max: 1,
+  range: "min",
+  value: 0,
+  slide: function( event, ui ) {
+    // select[ 0 ].selectedIndex = ui.value - 1;
+    // console.log(ui.value);
+    updateTime(arrayTime[ui.value]);
+  }
+});
+
+// $( "#minbeds" ).change(function() {
+//   slider.slider( "value", this.selectedIndex + 1 );
+// });
+
+
 // Start drawing
 var svg = d3.select("#viz-container").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -30,17 +49,16 @@ var color = d3.scale.ordinal()
     .domain(["male","female"]);
 
 // Add event listener
-$(".timerange").on("click", function(){
-  updateTime(this.id);
-});
+// $(".timerange").on("click", function(){
+//   updateTime(this.id);
+// });
 
 $(".category").on("click", function(){
   updateCategory(this.id);
 });
 
 // First time loading
-// updateGraph();
-firstTimeGraph();
+// firstTimeGraph();
 
 // Update Functions
 function updateTime(time_num) {
