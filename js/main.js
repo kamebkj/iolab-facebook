@@ -6,15 +6,15 @@ var margin = {top: 100, right: 80, bottom: 80, left: 80},
 var distance_radius = 250;
 
 // Initial variables for storing categories
-var arrayTime = ["2013-Q3", "2013-Q4"];
+var arrayTime = ["2013-Q1","2013-Q2","2013-Q3", "2013-Q4"];
 var currentCategory = "relationship-like";
-var currentTime = "2013-Q3";
+var currentTime = "2013-Q1";
 
 // Add a slider 
 var select = $( "#timerange" );
 var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
   min: 0,
-  max: 1,
+  max: 3,
   range: "min",
   value: 0,
   slide: function( event, ui ) {
