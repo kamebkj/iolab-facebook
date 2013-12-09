@@ -46,14 +46,7 @@ function OutputData(){
   var user_feed;
   var Q4_2013;
   var Q3_2013;
-  var Q2_2013;
-  var Q1_2013;
-  /*
-  var Q4_2012;
-  var Q3_2012;
-  var Q2_2012;
-  var Q1_2012;
-*/
+
   var relationship_like;
   var facebook_data;
 
@@ -96,130 +89,13 @@ function OutputData(){
   };   
   friends = [];
 
- //Q2 2013
-  for (var i=0; i < user_profile.length; i++){
-    friends.push(getFriend("Q2_2013",i));
-  }
-  for (key in user_feedcount_stack){
-    for (period in user_feedcount_stack[key]){
-      if (period == "Q2_2013_user_feedcount"){
-        user_feed = {
-          feedCount: user_feedcount_stack[key][period]
-        }
-      }
-    }
-  }
-  Q2_2013 = {
-    "user": user_feed,
-    "friends": friends 
-  };   
-  friends = [];
 
- //Q1 2013
-  for (var i=0; i < user_profile.length; i++){
-    friends.push(getFriend("Q1_2013",i));
-  }
-  for (key in user_feedcount_stack){
-    for (period in user_feedcount_stack[key]){
-      if (period == "Q1_2013_user_feedcount"){
-        user_feed = {
-          feedCount: user_feedcount_stack[key][period]
-        }
-      }
-    }
-  }
-  Q1_2013 = {
-    "user": user_feed,
-    "friends": friends 
-  };   
-  friends = [];
-/*
- //Q4 2012
-  for (var i=0; i < user_profile.length; i++){
-    friends.push(getFriend("Q4_2012",i));
-  }
-  for (key in user_feedcount_stack){
-    for (period in user_feedcount_stack[key]){
-      if (period == "Q4_2012_user_feedcount"){
-        user_feed = {
-          feedCount: user_feedcount_stack[key][period]
-        }
-      }
-    }
-  }
-  Q4_2012 = {
-    "user": user_feed,
-    "friends": friends 
-  };   
-  friends = [];
- //Q3 2012
-  for (var i=0; i < user_profile.length; i++){
-    friends.push(getFriend("Q3_2012",i));
-  }
-  for (key in user_feedcount_stack){
-    for (period in user_feedcount_stack[key]){
-      if (period == "Q3_2012_user_feedcount"){
-        user_feed = {
-          feedCount: user_feedcount_stack[key][period]
-        }
-      }
-    }
-  }
-  Q3_2012 = {
-    "user": user_feed,
-    "friends": friends 
-  };   
-  friends = [];
- //Q2 2012
-  for (var i=0; i < user_profile.length; i++){
-    friends.push(getFriend("Q2_2012",i));
-  }
-  for (key in user_feedcount_stack){
-    for (period in user_feedcount_stack[key]){
-      if (period == "Q2_2012_user_feedcount"){
-        user_feed = {
-          feedCount: user_feedcount_stack[key][period]
-        }
-      }
-    }
-  }
-  Q2_2012 = {
-    "user": user_feed,
-    "friends": friends 
-  };   
-  friends = [];
- //Q1 2012
-  for (var i=0; i < user_profile.length; i++){
-    friends.push(getFriend("Q1_2012",i));
-  }
-  for (key in user_feedcount_stack){
-    for (period in user_feedcount_stack[key]){
-      if (period == "Q1_2012_user_feedcount"){
-        user_feed = {
-          feedCount: user_feedcount_stack[key][period]
-        }
-      }
-    }
-  }
-  Q1_2012 = {
-    "user": user_feed,
-    "friends": friends 
-  };   
-  friends = [];
 
-*/
+
   //All
   relationship_like = {
     "2013-Q4": Q4_2013,
-    "2013-Q3": Q3_2013,
-    "2013-Q2": Q2_2013,
-    "2013-Q1": Q1_2013/*,
-
-    "2012-Q4": Q4_2012,
-    "2012-Q3": Q3_2012,
-    "2012-Q2": Q2_2012,
-    "2012-Q1": Q1_2012  
-    */
+    "2013-Q3": Q3_2013
   };
   facebook_data = {
     "user": my_profile,
@@ -249,7 +125,7 @@ function GetUserProfile(){
             user_profile[j].Q4_2013_feedcount = response.data.length;
           }
         }
-//        console.log(user_profile);
+        console.log(user_profile);
         task_completed_getuserprofile += 1;
       }
 
@@ -263,84 +139,11 @@ function GetUserProfile(){
           }
         }
         task_completed_getuserprofile += 1;
-//        console.log(user_profile);
+        console.log(user_profile);
       }
 
     );
-    //2013 Q2
-    FB.api("/"+top50_user[i]+"/feed?fields=id,from&limit=1000&since=1 Apr 2013&until=30 Jun 2013",
-      function(response){
-        for (var j = 0; j < user_profile.length; j++){
-          if (user_profile[j].id == response.data[0].from.id){
-            user_profile[j].Q2_2013_feedcount = response.data.length;
-          }
-        }
-        task_completed_getuserprofile += 1;
-//        console.log(user_profile);
-      }
-    );
-    //2013 Q1
-    FB.api("/"+top50_user[i]+"/feed?fields=id,from&limit=1000&since=1 Jan 2013&until=31 Mar 2013",
-      function(response){
-        for (var j = 0; j < user_profile.length; j++){
-          if (user_profile[j].id == response.data[0].from.id){
-            user_profile[j].Q1_2013_feedcount = response.data.length;
-          }
-        }
-        task_completed_getuserprofile += 1;
-//        console.log(user_profile);
-      }
-    );
-    /*
-    //2012 Q4
-    FB.api("/"+top50_user[i]+"/feed?fields=id,from&limit=1000&since=1 Oct 2012&until=31 Dec 2012",
-      function(response){
-        for (var j = 0; j < user_profile.length; j++){
-          if (user_profile[j].id == response.data[0].from.id){
-            user_profile[j].Q4_2012_feedcount = response.data.length;
-          }
-        }
-        task_completed_getuserprofile += 1;
-        console.log(user_profile);
-      }
-    );
-    //2012 Q3
-    FB.api("/"+top50_user[i]+"/feed?fields=id,from&limit=1000&since=1 Jul 2012&until=30 Sep 2012",
-      function(response){
-        for (var j = 0; j < user_profile.length; j++){
-          if (user_profile[j].id == response.data[0].from.id){
-            user_profile[j].Q3_2012_feedcount = response.data.length;
-          }
-        }
-        task_completed_getuserprofile += 1;
-        console.log(user_profile);
-      }
-    );
-    //2012 Q2
-    FB.api("/"+top50_user[i]+"/feed?fields=id,from&limit=1000&since=1 Apr 2012&until=30 Jun 2012",
-      function(response){
-        for (var j = 0; j < user_profile.length; j++){
-          if (user_profile[j].id == response.data[0].from.id){
-            user_profile[j].Q2_2012_feedcount = response.data.length;
-          }
-        }
-        task_completed_getuserprofile += 1;
-        console.log(user_profile);
-      }
-    );
-    //2012 Q1
-    FB.api("/"+top50_user[i]+"/feed?fields=id,from&limit=1000&since=1 Jan 2012&until=31 Mar 2012",
-      function(response){
-        for (var j = 0; j < user_profile.length; j++){
-          if (user_profile[j].id == response.data[0].from.id){
-            user_profile[j].Q1_2012_feedcount = response.data.length;
-          }
-        }
-        task_completed_getuserprofile += 1;
-        console.log(user_profile);
-      }
-    );
-*/
+
     for (var j = 0; j<user_profile.length; j++){
       for (key in user_likes_stack){
         for (period in user_likes_stack[key]){
@@ -368,11 +171,10 @@ function GetUserProfile(){
   setInterval(function()
   {
     //console.log("task_completed_getuserprofile",task_completed_getuserprofile);
-    if (task_completed_getuserprofile > 197 && task_completed_getuserprofile <= 200){
+    if (task_completed_getuserprofile == 100){
       OutputData();
-      task_completed_getuserprofile = 201;
+      task_completed_getuserprofile = 101;
     }
-    console.log("task_completed:"+task_completed_getuserprofile/2 +"%");
   }
     ,3000);  
 }
@@ -553,49 +355,33 @@ function GetFeed() {
       }
       
     );
+/*
     //Q2 2013
     FB.api("/me/posts?fields=likes.limit(300).fields(id),comments.limit(100).fields(from),created_time,message,type&until=30 Jun 2013&since=1 Apr 2013&limit=1000",
       function (response){
 //        console.log(response);
         var user_likes = [];
         var user_comments = [];
-        var like_count = 0;
         for (var i = 0; i < response.data.length; i++){
           if (response.data[i].likes){
-            like_count +=1;
             for (var j = 0; j <response.data[i].likes.data.length; j++){
-              if (response.data[i].likes.data[j].id in user_likes){
-                user_likes[response.data[i].likes.data[j].id] +=1;
-              }
-              else{
-                user_likes[response.data[i].likes.data[j].id] = 1;
-              }
+              user_likes.push(response.data[i].likes.data[j].id);
             }
           }
           if (response.data[i].comments){
             for (var j = 0; j <response.data[i].comments.data.length; j++){
-              if (response.data[i].comments.data[j].from.id in user_comments){
-                user_comments[response.data[i].comments.data[j].from.id] +=1;
-              }
-              else{
-                user_comments[response.data[i].comments.data[j].from.id] = 1;
-              }
+              user_comments.push(response.data[i].comments.data[j].from.id);
             }
           }
         }
         user_likes_stack.push({
-          Q2_2013_like: user_likes
+          Q2_2013: user_likes
         });
         user_comments_stack.push({
-          Q2_2013_comment: user_comments
-        });
-        user_feedcount_stack.push({
-          Q2_2013_user_feedcount: like_count
+          Q2_2013: user_comments
         });
         console.log(user_likes_stack);
         console.log(user_comments_stack);
-        console.log(user_feedcount_stack);
-        task_completed_getfeed += 1;
       }
       
     );
@@ -605,234 +391,38 @@ function GetFeed() {
 //        console.log(response);
         var user_likes = [];
         var user_comments = [];
-        var like_count = 0;
         for (var i = 0; i < response.data.length; i++){
           if (response.data[i].likes){
-            like_count +=1;
             for (var j = 0; j <response.data[i].likes.data.length; j++){
-              if (response.data[i].likes.data[j].id in user_likes){
-                user_likes[response.data[i].likes.data[j].id] +=1;
-              }
-              else{
-                user_likes[response.data[i].likes.data[j].id] = 1;
-              }
+              user_likes.push(response.data[i].likes.data[j].id);
             }
           }
           if (response.data[i].comments){
             for (var j = 0; j <response.data[i].comments.data.length; j++){
-              if (response.data[i].comments.data[j].from.id in user_comments){
-                user_comments[response.data[i].comments.data[j].from.id] +=1;
-              }
-              else{
-                user_comments[response.data[i].comments.data[j].from.id] = 1;
-              }
+              user_comments.push(response.data[i].comments.data[j].from.id);
             }
           }
         }
         user_likes_stack.push({
-          Q1_2013_like: user_likes
+          Q1_2013: user_likes
         });
         user_comments_stack.push({
-          Q1_2013_comment: user_comments
-        });
-        user_feedcount_stack.push({
-          Q1_2013_user_feedcount: like_count
+          Q1_2013: user_comments
         });
         console.log(user_likes_stack);
         console.log(user_comments_stack);
-        console.log(user_feedcount_stack);
-        task_completed_getfeed += 1;
       }
+      
     );
-/*
-    //Q4 2012
-    FB.api("/me/posts?fields=likes.limit(300).fields(id),comments.limit(100).fields(from),created_time,message,type&until=31 Dec 2012&since=1 Oct 2012&limit=1000",
-      function (response){
-//        console.log(response);
-        var user_likes = [];
-        var user_comments = [];
-        var like_count = 0;
-        for (var i = 0; i < response.data.length; i++){
-          if (response.data[i].likes){
-            like_count +=1;
-            for (var j = 0; j <response.data[i].likes.data.length; j++){
-              if (response.data[i].likes.data[j].id in user_likes){
-                user_likes[response.data[i].likes.data[j].id] +=1;
-              }
-              else{
-                user_likes[response.data[i].likes.data[j].id] = 1;
-              }
-            }
-          }
-          if (response.data[i].comments){
-            for (var j = 0; j <response.data[i].comments.data.length; j++){
-              if (response.data[i].comments.data[j].from.id in user_comments){
-                user_comments[response.data[i].comments.data[j].from.id] +=1;
-              }
-              else{
-                user_comments[response.data[i].comments.data[j].from.id] = 1;
-              }
-            }
-          }
-        }
-        user_likes_stack.push({
-          Q4_2012_like: user_likes
-        });
-        user_comments_stack.push({
-          Q4_2012_comment: user_comments
-        });
-        user_feedcount_stack.push({
-          Q4_2012_user_feedcount: like_count
-        });
-        console.log(user_likes_stack);
-        console.log(user_comments_stack);
-        console.log(user_feedcount_stack);
-        task_completed_getfeed += 1;
-      }      
-    );
-    //Q3 2012
-    FB.api("/me/posts?fields=likes.limit(300).fields(id),comments.limit(100).fields(from),created_time,message,type&until=30 Sep 2012&since=1 Jul 2012&limit=1000",
-      function (response){
-//        console.log(response);
-        var user_likes = [];
-        var user_comments = [];
-        var like_count = 0;
-        for (var i = 0; i < response.data.length; i++){
-          if (response.data[i].likes){
-            like_count +=1;
-            for (var j = 0; j <response.data[i].likes.data.length; j++){
-              if (response.data[i].likes.data[j].id in user_likes){
-                user_likes[response.data[i].likes.data[j].id] +=1;
-              }
-              else{
-                user_likes[response.data[i].likes.data[j].id] = 1;
-              }
-            }
-          }
-          if (response.data[i].comments){
-            for (var j = 0; j <response.data[i].comments.data.length; j++){
-              if (response.data[i].comments.data[j].from.id in user_comments){
-                user_comments[response.data[i].comments.data[j].from.id] +=1;
-              }
-              else{
-                user_comments[response.data[i].comments.data[j].from.id] = 1;
-              }
-            }
-          }
-        }
-        user_likes_stack.push({
-          Q3_2012_like: user_likes
-        });
-        user_comments_stack.push({
-          Q3_2012_comment: user_comments
-        });
-        user_feedcount_stack.push({
-          Q3_2012_user_feedcount: like_count
-        });
-        console.log(user_likes_stack);
-        console.log(user_comments_stack);
-        console.log(user_feedcount_stack);
-        task_completed_getfeed += 1;
-      }      
-    );
-    //Q2 2012
-    FB.api("/me/posts?fields=likes.limit(300).fields(id),comments.limit(100).fields(from),created_time,message,type&until=30 Jun 2012&since=1 Apr 2012&limit=1000",
-      function (response){
-//        console.log(response);
-        var user_likes = [];
-        var user_comments = [];
-        var like_count = 0;
-        for (var i = 0; i < response.data.length; i++){
-          if (response.data[i].likes){
-            like_count +=1;
-            for (var j = 0; j <response.data[i].likes.data.length; j++){
-              if (response.data[i].likes.data[j].id in user_likes){
-                user_likes[response.data[i].likes.data[j].id] +=1;
-              }
-              else{
-                user_likes[response.data[i].likes.data[j].id] = 1;
-              }
-            }
-          }
-          if (response.data[i].comments){
-            for (var j = 0; j <response.data[i].comments.data.length; j++){
-              if (response.data[i].comments.data[j].from.id in user_comments){
-                user_comments[response.data[i].comments.data[j].from.id] +=1;
-              }
-              else{
-                user_comments[response.data[i].comments.data[j].from.id] = 1;
-              }
-            }
-          }
-        }
-        user_likes_stack.push({
-          Q2_2012_like: user_likes
-        });
-        user_comments_stack.push({
-          Q2_2012_comment: user_comments
-        });
-        user_feedcount_stack.push({
-          Q2_2012_user_feedcount: like_count
-        });
-        console.log(user_likes_stack);
-        console.log(user_comments_stack);
-        console.log(user_feedcount_stack);
-        task_completed_getfeed += 1;
-      }      
-    );
-    //Q1 2012
-    FB.api("/me/posts?fields=likes.limit(300).fields(id),comments.limit(100).fields(from),created_time,message,type&until=31 Mar 2012&since=1 Jan 2012&limit=1000",
-      function (response){
-//        console.log(response);
-        var user_likes = [];
-        var user_comments = [];
-        var like_count = 0;
-        for (var i = 0; i < response.data.length; i++){
-          if (response.data[i].likes){
-            like_count +=1;
-            for (var j = 0; j <response.data[i].likes.data.length; j++){
-              if (response.data[i].likes.data[j].id in user_likes){
-                user_likes[response.data[i].likes.data[j].id] +=1;
-              }
-              else{
-                user_likes[response.data[i].likes.data[j].id] = 1;
-              }
-            }
-          }
-          if (response.data[i].comments){
-            for (var j = 0; j <response.data[i].comments.data.length; j++){
-              if (response.data[i].comments.data[j].from.id in user_comments){
-                user_comments[response.data[i].comments.data[j].from.id] +=1;
-              }
-              else{
-                user_comments[response.data[i].comments.data[j].from.id] = 1;
-              }
-            }
-          }
-        }
-        user_likes_stack.push({
-          Q1_2012_like: user_likes
-        });
-        user_comments_stack.push({
-          Q1_2012_comment: user_comments
-        });
-        user_feedcount_stack.push({
-          Q1_2012_user_feedcount: like_count
-        });
-        console.log(user_likes_stack);
-        console.log(user_comments_stack);
-        console.log(user_feedcount_stack);
-        task_completed_getfeed += 1;
-      }      
-    );
-*/
+  
+*/    
   }, {scope: 'read_stream'});
 
   setInterval(function()
   {
-    if (task_completed_getfeed == 4){
+    if (task_completed_getfeed == 2){
       GetTopUser();
-      task_completed_getfeed = 5;
+      task_completed_getfeed = 3;
     }
   }
     ,3000);
