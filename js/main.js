@@ -16,14 +16,12 @@ var currentTime = 0;
 
 // Add a slider 
 var select = $( "#timerange" );
-var slider = $( "<div id='slider' style='display:none;'></div>" ).insertAfter( select ).slider({
-// var slider = $("#timerange").append("<div id='slider'></div>").slider({
+var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
   min: 0,
   max: 3,
-  range: "min",
+  // range: "min",
   value: 0,
   slide: function( event, ui ) {
-    // currentTime = ui.value;
     updateTime(ui.value);
   }
 });
@@ -154,8 +152,8 @@ function drawHistoryCircles() {
       .enter().append("g")
       .attr({
         "transform": function(d,i) {
-          var x = (distance_radius*(1-d.likeCount/user_feed[k])+2*feedScale(user_feed[k]))*Math.cos((Math.PI*2)/all_data[currentCategory][arrayTime[k]]["friends"].length*(i)) + width/2;
-          var y = (distance_radius*(1-d.likeCount/user_feed[k])+2*feedScale(user_feed[k]))*Math.sin((Math.PI*2)/all_data[currentCategory][arrayTime[k]]["friends"].length*(i)) + height/2;
+          var x = (distance_radius*(1-d.likeCount/user_feed[k]))*Math.cos((Math.PI*2)/all_data[currentCategory][arrayTime[k]]["friends"].length*(i)) + width/2;
+          var y = (distance_radius*(1-d.likeCount/user_feed[k]))*Math.sin((Math.PI*2)/all_data[currentCategory][arrayTime[k]]["friends"].length*(i)) + height/2;
           var rotation = 360/all_data[currentCategory][arrayTime[k]]["friends"].length*(i);
           if (rotation>90 && rotation<270) {
             rotation = rotation+180;
@@ -233,8 +231,11 @@ function firstTimeGraph() {
     .enter().append("g")
     .attr({
       "transform": function(d,i) {
-        var x = (distance_radius*(1-d.likeCount/user_feed[currentTime])+2*feedScale(user_feed[currentTime]))*Math.cos((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + width/2;
-        var y = (distance_radius*(1-d.likeCount/user_feed[currentTime])+2*feedScale(user_feed[currentTime]))*Math.sin((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + height/2;
+        var x = (distance_radius*(1-d.likeCount/user_feed[currentTime]))*Math.cos((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + width/2;
+        var y = (distance_radius*(1-d.likeCount/user_feed[currentTime]))*Math.sin((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + height/2;
+
+        // var x = (distance_radius*(1-d.likeCount/user_feed[currentTime])+2*feedScale(user_feed[currentTime]))*Math.cos((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + width/2;
+        // var y = (distance_radius*(1-d.likeCount/user_feed[currentTime])+2*feedScale(user_feed[currentTime]))*Math.sin((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + height/2;
         var rotation = 360/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i);
         if (rotation>90 && rotation<270) {
           rotation = rotation+180;
@@ -338,8 +339,8 @@ function updateGraph() {
     .enter().append("g")
     .attr({
       "transform": function(d,i) {
-        var x = (distance_radius*(1-d.likeCount/user_feed[currentTime])+2*feedScale(user_feed[currentTime]))*Math.cos((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + width/2;
-        var y = (distance_radius*(1-d.likeCount/user_feed[currentTime])+2*feedScale(user_feed[currentTime]))*Math.sin((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + height/2;
+        var x = (distance_radius*(1-d.likeCount/user_feed[currentTime]))*Math.cos((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + width/2;
+        var y = (distance_radius*(1-d.likeCount/user_feed[currentTime]))*Math.sin((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + height/2;
         var rotation = 360/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i);
         if (rotation>90 && rotation<270) {
           rotation = rotation+180;
@@ -352,7 +353,11 @@ function updateGraph() {
   friend_circle = friend_circle_g.selectAll("circle")
     .data(function(d,i) { return d; });
   friend_circle.exit().transition(400)
-    .attr("r",0)
+    .attr({
+      "cx": 0,
+      "cy": 0,
+      "r": "0"
+    })
     .remove();
   friend_circle = friend_circle_g.append("circle");
   friend_circle.attr({
@@ -394,8 +399,8 @@ function updateGraph() {
     .duration(400)
     .attr({
       "transform": function(d,i) {
-        var x = (distance_radius*(1-d.likeCount/user_feed[currentTime])+2*feedScale(user_feed[currentTime]))*Math.cos((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + width/2;
-        var y = (distance_radius*(1-d.likeCount/user_feed[currentTime])+2*feedScale(user_feed[currentTime]))*Math.sin((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + height/2;
+        var x = (distance_radius*(1-d.likeCount/user_feed[currentTime]))*Math.cos((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + width/2;
+        var y = (distance_radius*(1-d.likeCount/user_feed[currentTime]))*Math.sin((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + height/2;
         var rotation = 360/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i);
         if (rotation>90 && rotation<270) {
           rotation = rotation+180;
