@@ -4,6 +4,7 @@ body {
   background-color: #ccc;*/
 }
 
+/* Timerange slider */
 #slider {
 	width: 500px;
 	margin-top: 50px;
@@ -15,9 +16,20 @@ body {
 	display: inline;
 }
 
+/* Tooltip */
+.tooltip {	
+    position: absolute;			
+    text-align: center;		
+    width: 150px;								
+    padding: 5px 0;				
+    font: 12px sans-serif;		
+    background: #eee;	
+    border: 0px;		
+    border-radius: 5px;			
+    pointer-events: none;			
+}
 
 /* Loading indicator */
-
 .modal {
     display:    none;
     position:   fixed;

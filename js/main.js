@@ -49,7 +49,7 @@ var color = d3.scale.ordinal()
     .domain(["male","female"]);
 
 // Normalize feed count to draw radius
-// Use feedScale() to normalize 
+// Create function feedScale() to Normalize 
 for (var i=0; i<arrayTime.length; i++) {
   user_feed.push(all_data[currentCategory][arrayTime[i]]["user"].feedCount);
   // push user feedCount
@@ -62,6 +62,12 @@ for (var i=0; i<arrayTime.length; i++) {
 feedScale = d3.scale.linear()
   .domain([d3.min(feed), d3.max(feed)])
   .range([instance_radius_min,instance_radius_max]);
+
+
+// Create tooltips for hover use
+var tooltip = d3.select("body").append("div") 
+    .attr("class", "tooltip")       
+    .style("opacity", 0);
 
 // Add event listener
 // $(".timerange").on("click", function(){
@@ -157,10 +163,7 @@ function firstTimeGraph() {
         return "translate("+x+","+y+") rotate("+rotation+")";
       }
     });
-    // .on("mouseover", function(d,i) {
-    //     d3.select(this).style("opacity",0.8);
-    //     // console.log(d.name);
-    // });
+    
   friend_circle = friend_circle_g.append("circle")
     .attr({
       "cx": 0,
@@ -172,6 +175,24 @@ function firstTimeGraph() {
         if (typeof d.gender!=="undefined") return color(d.gender);
         else return "#ccc";
       }
+    })
+    .on("mouseover", function(d,i) {
+      d3.select(this).style("opacity",0.6);
+      console.log(d);
+
+      // Display d.rawNumber in tooltip popup
+      tooltip.transition()
+        .duration(200)
+        .style("opacity", 0.95);
+      tooltip.html(d.name+"<br/>"+"Like:"+d.likeCount+"<br/>"+"Comment:"+d.commentCount+"<br/>"+"Feed:"+d.feedCount)
+        .style("left", (d3.event.pageX)+"px")
+        .style("top", (d3.event.pageY - 20)+"px")
+    })
+    .on("mouseout", function(d,i) {
+      d3.select(this).style("opacity",1.0);
+      tooltip.transition()
+        .duration(200)
+        .style("opacity", 0);
     });
 
   friend_name = friend_circle_g.append("text")
