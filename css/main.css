@@ -106,7 +106,7 @@ body {
 
 #timerange-label ul{
 	text-align: center;
-    margin-left: -50px;
+    margin-left: -30px;
     width: 500px;
 }
 
@@ -144,8 +144,9 @@ body {
 }
 .modal .modal-text {
 	position: absolute;
+    text-align: center;
 	top: 40%;
-	left: 43.5%;
+	left: 40%;
 }
 
 body.loading {
