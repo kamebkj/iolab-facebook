@@ -234,11 +234,11 @@ function OutputData(){
   $("body").removeClass("loading"); 
   $("#slider").show();
   $("#timerange-label").show();
-  // var s = JSON.stringify(all_data)
-  // $("html").text(s);
-  initialize();
-  drawHistoryCircles();
-  firstTimeGraph();
+  var s = JSON.stringify(all_data)
+  $("html").text(s);
+  // initialize();
+  // drawHistoryCircles();
+  // firstTimeGraph();
 }
 
 

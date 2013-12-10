@@ -22,8 +22,8 @@ var slider = $( "<div id='slider' style='display:none;'></div>" ).insertAfter( s
   range: "min",
   value: 0,
   slide: function( event, ui ) {
-    currentTime = ui.value;
-    updateTime(arrayTime[currentTime]);
+    // currentTime = ui.value;
+    updateTime(ui.value);
   }
 });
 
@@ -63,13 +63,25 @@ var tooltip = d3.select("body").append("div")
 // });
 
 // First time loading
-// drawHistoryCircles();
-// firstTimeGraph();
+initialize();
+drawHistoryCircles();
+firstTimeGraph();
 
 
 
 // Update Functions
+function updateTimeForArray(time_num) {
+  // console.log($(this));
+  return function() {
+    // console.log("bkj");
+    // console.log(time_num);
+    updateTime(time_num);
+    slider.slider("value",time_num);
+  }
+}
+
 function updateTime(time_num) {
+  currentTime = time_num;
   updateGraph();
 }
 
@@ -115,18 +127,26 @@ function drawHistoryCircles() {
           return "translate("+x+","+y+") rotate("+rotation+")";
         }
       });
-      console.log(friend_history_circle_g)
-      friend_history_circle = friend_history_circle_g.append("circle")
-        .attr({
-          "cx": 0,
-          "cy": 0,
-          "r": function(d,i) {
-            return feedScale(d.feedCount);
-          },
-          "fill": function(d,i) {
-            return "#eee";
-          }
-        });
+    // console.log(friend_history_circle_g)
+    friend_history_circle = friend_history_circle_g.append("circle")
+      .attr({
+        "cx": 0,
+        "cy": 0,
+        "r": function(d,i) {
+          return feedScale(d.feedCount);
+        },
+        "fill": function(d,i) {
+          return "#eee";
+        }
+      })
+      .on("click", updateTimeForArray(k))
+      .on("mouseover", function(d,i) {
+        d3.select(this).style("opacity",0.4);
+        d3.select(this).style("cursor", "pointer");
+      })
+      .on("mouseout", function(d,i) {
+        d3.select(this).style("opacity",1.0);
+      });
   }
 }
 
@@ -180,6 +200,7 @@ function firstTimeGraph() {
     })
     .on("mouseover", function(d,i) {
       d3.select(this).style("opacity",0.6);
+      d3.select(this).style("cursor", "pointer");
       tooltip.transition()
         .duration(200)
         .style("opacity", 0.95);
@@ -268,6 +289,7 @@ function updateGraph() {
   })
   .on("mouseover", function(d,i) {
       d3.select(this).style("opacity",0.6);
+      d3.select(this).style("cursor", "pointer");
       tooltip.transition()
         .duration(200)
         .style("opacity", 0.95);
