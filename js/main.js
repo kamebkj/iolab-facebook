@@ -5,6 +5,7 @@ var margin = {top: 100, right: 80, bottom: 80, left: 80},
     height = 700 - margin.top - margin.bottom;
 
 var distance_radius = 250;
+var background_radius = [50,100,150,200,250];
 var instance_radius_min = 5;
 var instance_radius_max = 15;
 
@@ -98,6 +99,22 @@ function updateCategory(category_num) {
 // Drawing functions
 
 function initialize() {
+
+  // Add radar background
+  background_circle = svg.selectAll("background_circle")
+    .data(background_radius)
+    .enter().append("circle")
+    .attr({
+      "cx": width/2,
+      "cy": height/2,
+      "r": function(d,i) {
+        return d;
+      },
+      "stroke": "#ccc",
+      "fill": "none"
+    });
+
+
   // Normalize feed count to draw radius
   // Create function feedScale() to Normalize 
   for (var i=0; i<arrayTime.length; i++) {
