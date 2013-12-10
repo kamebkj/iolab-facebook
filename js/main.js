@@ -14,9 +14,9 @@ var arrayTime = ["2013-Q1","2013-Q2","2013-Q3", "2013-Q4"];
 var currentCategory = "relationship-like";
 var currentTime = 0;
 
-// Add a slider 
+// Add a slider
 var select = $( "#timerange" );
-var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
+var slider = $( "<div id='slider' style='display:none;'></div>" ).insertAfter( select ).slider({
   min: 0,
   max: 3,
   // range: "min",
@@ -45,7 +45,7 @@ var friend_circle;
 var friend_name;
 
 var color = d3.scale.ordinal()
-    .range(["#5790BE","#CA5D59"]) 
+    .range(["#5790BE","#CA5D59"])
     .domain(["male","female"]);
 
 var colorStroke = d3.scale.ordinal()
@@ -53,8 +53,8 @@ var colorStroke = d3.scale.ordinal()
     .domain(["male","female"]);
 
 // Create tooltips for hover use
-var tooltip = d3.select("body").append("div") 
-    .attr("class", "tooltip")       
+var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
     .style("opacity", 0);
 
 // Add event listener
@@ -114,7 +114,7 @@ function initialize() {
 
 
   // Normalize feed count to draw radius
-  // Create function feedScale() to Normalize 
+  // Create function feedScale() to Normalize
   for (var i=0; i<arrayTime.length; i++) {
     user_feed.push(all_data[currentCategory][arrayTime[i]]["user"].feedCount);
     // push user feedCount
@@ -244,7 +244,7 @@ function firstTimeGraph() {
         return "translate("+x+","+y+") rotate("+rotation+")";
       }
     });
-    
+
   friend_circle = friend_circle_g.append("circle")
     .attr({
       "cx": 0,
