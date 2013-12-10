@@ -232,6 +232,7 @@ function OutputData(){
 
   console.log("done");
   $("body").removeClass("loading"); 
+  $("#get-data-btn button").hide();
   $("#slider").show();
   $("#timerange-label").show();
   // var s = JSON.stringify(all_data)
