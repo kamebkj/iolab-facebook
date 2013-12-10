@@ -2,14 +2,23 @@ body {
 /*  background-color: #ccc; */
 }
 
+
 #logo h1 {
     font-family: monospace, serif;
     color: #353535;
-    margin-left: 3%;
+    margin-left: 1%;
+    margin-top: 50px;
+    margin-bottom: 30px;
 
     /* Slide-in Effect */
-    -moz-animation-duration: 1s;
-    -webkit-animation-duration: 1s;
+    -moz-animation-duration: 2s;
+    -webkit-animation-duration: 2s;
+    -moz-animation-name: slidein;
+    -webkit-animation-name: slidein;
+
+    /* Slide-in Effect */
+    -moz-animation-duration: 2s;
+    -webkit-animation-duration: 2s;
     -moz-animation-name: slidein;
     -webkit-animation-name: slidein;
 }
@@ -22,7 +31,7 @@ body {
     }
 
     to {
-        margin-left:3%;
+        margin-left:1%;
         width:100%;
     }
 }
@@ -34,46 +43,74 @@ body {
     }
 
     to {
-        margin-left:3%;
+        margin-left:1%;
         width:100%;
     }
 }
 
+#get-data-btn button {
+    background-color:#637aad;
+    -moz-border-radius:30px;
+    -webkit-border-radius:30px;
+    border-radius:30px;
+    border:1px solid #314179;
+    display: inline-block;
+    cursor:pointer;
+    color: #FFF;
+    font-size:17px;
+    padding:16px 31px;
+    text-decoration: none;
+    text-shadow:0px 1px 0px #7a8eb9;
+    margin-top: 5px;
+    margin-left: 10%;
+}
 
+#get-data-btn button:hover {
+    background-color:#5972a7;
+}
 
-
+#get-data-btn button:active {
+    position:relative;
+    top:1px;
+}
 
 
 /* svg */
 
 #viz-container {
-    margin-top: -80px;
-/*    background-color: #FF0; */
+    margin-top: -590px;
+    background-color: #F00;
 }
 
 #viz-container svg {
+    margin-top: -130px;
 	display: block;
 	margin: auto;
 	font-size: 0.8em;
-/*    background-color: #FFF; */
+    float: right;
+    margin-top: -10px;
 }
 
 /* Timerange slider */
 
 #timerange-label {
     display: none;
+    width: 350px;
 }
+
 #slider {
-	width: 500px;
-	margin: 50px auto 20px;
+	width: 350px;
+    margin-top: 80px;
+    margin-left: 4%;
 }
+
 #timerange-label ul{
 	text-align: center;
-	margin: auto;
-	padding-left: 100px;
+	margin-left: 4%;
 }
+
 #timerange-label ul li{
-	padding-right: 110px;
+	padding-right: 10px;
 	display: inline;
 }
 

@@ -9,28 +9,36 @@
 </head>
 
 <body>
-	<div id="logo">
-		<h1>Who likes me the most?</h1>
-	</div>
+
+	<div id="side-nav">
+		<div id="logo">
+			<br/>
+			<img src="image/like-icon.png" alt="like-icon">
+			<div id="fb-root"></div>
+				<fb:login-button autologoutlink="true" onlogin="OnRequestPermission();">
+				</fb:login-button> <br/>
+			<h1>Who likes me the most?</h1>
+
+		</div>
 
 
-	<div id="fb-root"></div>
+		<div id="get-data-btn">
+		 	<button onclick="GetFeed()">Get Data</button>
+		</div><!-- /get-data-btn -->
 
-		<fb:login-button autologoutlink="true" onlogin="OnRequestPermission();">
-		</fb:login-button> <br/>
-	 	<button onclick="GetFeed()">Get Data</button>
+		<div id="timerange"></div>
+		<div id="timerange-label">
+			<ul>
+				<li>2013-Q1</li>
+				<li>2013-Q2</li>
+				<li>2013-Q3</li>
+				<li>2013-Q4</li>
+			</ul>
+		</div><!-- /timerange-label -->
+	</div><!-- side-nav -->
 
 
 	<div id="viz-container"></div>
-	<div id="timerange"></div>
-	<div id="timerange-label">
-		<ul>
-			<li>2013-Q1</li>
-			<li>2013-Q2</li>
-			<li>2013-Q3</li>
-			<li>2013-Q4</li>
-		</ul>
-	</div>
 
 	<div class="modal">
 		<div class="modal-text">Calculating your relationship.<br/>Please be patient and don't cry.</div>
