@@ -15,7 +15,8 @@ var currentTime = 0;
 
 // Add a slider 
 var select = $( "#timerange" );
-var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
+var slider = $( "<div id='slider' style='display:none;'></div>" ).insertAfter( select ).slider({
+// var slider = $("#timerange").append("<div id='slider'></div>").slider({
   min: 0,
   max: 3,
   range: "min",
@@ -48,22 +49,6 @@ var color = d3.scale.ordinal()
     .range(["#5790BE","#CA5D59"]) 
     .domain(["male","female"]);
 
-// Normalize feed count to draw radius
-// Create function feedScale() to Normalize 
-for (var i=0; i<arrayTime.length; i++) {
-  user_feed.push(all_data[currentCategory][arrayTime[i]]["user"].feedCount);
-  // push user feedCount
-  feed.push(all_data[currentCategory][arrayTime[i]]["user"].feedCount);
-  // push friend feedCount
-  for (var k=0; k<all_data[currentCategory][arrayTime[i]]["friends"].length; k++) {
-    feed.push(all_data[currentCategory][arrayTime[i]]["friends"][k].feedCount);
-  }
-}
-feedScale = d3.scale.linear()
-  .domain([d3.min(feed), d3.max(feed)])
-  .range([instance_radius_min,instance_radius_max]);
-
-
 // Create tooltips for hover use
 var tooltip = d3.select("body").append("div") 
     .attr("class", "tooltip")       
@@ -78,8 +63,8 @@ var tooltip = d3.select("body").append("div")
 // });
 
 // First time loading
-drawHistoryCircles();
-firstTimeGraph();
+// drawHistoryCircles();
+// firstTimeGraph();
 
 
 
@@ -95,6 +80,23 @@ function updateCategory(category_num) {
 
 
 // Drawing functions
+
+function initialize() {
+  // Normalize feed count to draw radius
+  // Create function feedScale() to Normalize 
+  for (var i=0; i<arrayTime.length; i++) {
+    user_feed.push(all_data[currentCategory][arrayTime[i]]["user"].feedCount);
+    // push user feedCount
+    feed.push(all_data[currentCategory][arrayTime[i]]["user"].feedCount);
+    // push friend feedCount
+    for (var k=0; k<all_data[currentCategory][arrayTime[i]]["friends"].length; k++) {
+      feed.push(all_data[currentCategory][arrayTime[i]]["friends"][k].feedCount);
+    }
+  }
+  feedScale = d3.scale.linear()
+    .domain([d3.min(feed), d3.max(feed)])
+    .range([instance_radius_min,instance_radius_max]);
+}
 
 function drawHistoryCircles() {
   for (var k=0; k<arrayTime.length; k++) {
@@ -178,9 +180,6 @@ function firstTimeGraph() {
     })
     .on("mouseover", function(d,i) {
       d3.select(this).style("opacity",0.6);
-      console.log(d);
-
-      // Display d.rawNumber in tooltip popup
       tooltip.transition()
         .duration(200)
         .style("opacity", 0.95);
@@ -254,10 +253,6 @@ function updateGraph() {
         return "translate("+x+","+y+") rotate("+rotation+")";
       }
     });
-    // .on("mouseover", function(d,i) {
-    //     d3.select(this).style("opacity",0.8);
-    //     // console.log(d.name);
-    // });
 
   friend_circle = friend_circle_g.selectAll("circle")
     .data(function(d,i) { return d; });
@@ -270,7 +265,23 @@ function updateGraph() {
       if (typeof d.gender!=="undefined") return color(d.gender);
       else return "#ccc";
     }
-  });
+  })
+  .on("mouseover", function(d,i) {
+      d3.select(this).style("opacity",0.6);
+      tooltip.transition()
+        .duration(200)
+        .style("opacity", 0.95);
+      tooltip.html(d.name+"<br/>"+"Like:"+d.likeCount+"<br/>"+"Comment:"+d.commentCount+"<br/>"+"Feed:"+d.feedCount)
+        .style("left", (d3.event.pageX)+"px")
+        .style("top", (d3.event.pageY - 20)+"px")
+    })
+    .on("mouseout", function(d,i) {
+      d3.select(this).style("opacity",1.0);
+      tooltip.transition()
+        .duration(200)
+        .style("opacity", 0);
+    });
+
   friend_circle.transition()
     .duration(400)
     .attr({

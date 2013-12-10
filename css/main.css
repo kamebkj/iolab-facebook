@@ -12,6 +12,10 @@ body {
 }
 
 /* Timerange slider */
+
+#timerange-label {
+    display: none;
+}
 #slider {
 	width: 500px;
 	margin: 50px auto 20px;
