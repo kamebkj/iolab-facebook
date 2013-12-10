@@ -1,14 +1,61 @@
 body {
-/*  font-size: 10px;
-  font-family: "Roboto",  sans-serif;
-  background-color: #ccc;*/
+/*  background-color: #ccc; */
 }
 
+#logo h1 {
+    font-family: monospace, serif;
+    color: #353535;
+    margin-left: 3%;
+
+    /* Slide-in Effect */
+    -moz-animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+    -moz-animation-name: slidein;
+    -webkit-animation-name: slidein;
+}
+
+/* Slide-in Effect */
+@-moz-keyframes slidein {
+    from {
+        margin-left: -100%;
+        width:100%
+    }
+
+    to {
+        margin-left:3%;
+        width:100%;
+    }
+}
+
+@-webkit-keyframes slidein {
+    from {
+        margin-left: -100%;
+        width:100%
+    }
+
+    to {
+        margin-left:3%;
+        width:100%;
+    }
+}
+
+
+
+
+
+
 /* svg */
+
+#viz-container {
+    margin-top: -80px;
+/*    background-color: #FF0; */
+}
+
 #viz-container svg {
 	display: block;
 	margin: auto;
 	font-size: 0.8em;
+/*    background-color: #FFF; */
 }
 
 /* Timerange slider */
@@ -31,16 +78,16 @@ body {
 }
 
 /* Tooltip */
-.tooltip {	
-    position: absolute;			
-    text-align: center;		
-    width: 150px;								
-    padding: 5px 0;				
-    font: 12px sans-serif;		
-    background: #eee;	
-    border: 0px;		
-    border-radius: 5px;			
-    pointer-events: none;			
+.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 150px;
+    padding: 5px 0;
+    font: 12px sans-serif;
+    background: #eee;
+    border: 0px;
+    border-radius: 5px;
+    pointer-events: none;
 }
 
 /* Loading indicator */
@@ -52,9 +99,9 @@ body {
     left:       0;
     height:     100%;
     width:      100%;
-    background: rgba( 255, 255, 255, .8 ) 
-                url('../image/indicator.gif') 
-                50% 50% 
+    background: rgba( 255, 255, 255, .8 )
+                url('../image/indicator.gif')
+                50% 50%
                 no-repeat;
 }
 .modal .modal-text {
@@ -64,7 +111,7 @@ body {
 }
 
 body.loading {
-    overflow: hidden;   
+    overflow: hidden;
 }
 
 body.loading .modal {

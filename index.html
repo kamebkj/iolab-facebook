@@ -4,16 +4,22 @@
 	<title>Facebook</title>
 	<link rel="stylesheet" href="css/main.css">
 <!-- 	<link href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900" rel="stylesheet" type="text/css"> -->
-  
+
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 </head>
 
 <body>
+	<div id="logo">
+		<h1>Who likes me the most?</h1>
+	</div>
+
+
 	<div id="fb-root"></div>
 
-	<fb:login-button autologoutlink="true" onlogin="OnRequestPermission();">
-	</fb:login-button> <br/>
-	 <button onclick="GetFeed()">Get Data</button> 
+		<fb:login-button autologoutlink="true" onlogin="OnRequestPermission();">
+		</fb:login-button> <br/>
+	 	<button onclick="GetFeed()">Get Data</button>
+
 
 	<div id="viz-container"></div>
 	<div id="timerange"></div>
@@ -30,7 +36,7 @@
 		<div class="modal-text">Calculating your relationship.<br/>Please be patient and don't cry.</div>
 	</div>
 
-	<!-- 
+	<!--
 	<button class="category" id="relationship-like">Like</button>
 	<button class="category" id="relationship-comment">Comment</button> -->
 
@@ -42,16 +48,16 @@
 	<!-- <script src="js/all_data.js" type="text/javascript"></script> -->
 	<script src="js/get_data.js" type="text/javascript"></script>
 	<script src="js/main.js" type="text/javascript"></script>
-	
+
 	<script language="javascript" type="text/javascript">
 	    FB.init({
 	        appId: '661079377248854', //derek '179730172220981',
-	        status: true, 
-	        cookie: true, 
+	        status: true,
+	        cookie: true,
 	        xfbml: true
 	    });
 	</script>
-	 
-	
+
+
 </body>
 </html>
