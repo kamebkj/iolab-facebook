@@ -68,9 +68,9 @@ var tooltip = d3.select("body").append("div")
 // });
 
 // First time loading
-initialize();
-drawHistoryCircles();
-firstTimeGraph();
+// initialize();
+// drawHistoryCircles();
+// firstTimeGraph();
 
 
 
