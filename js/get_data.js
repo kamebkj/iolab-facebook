@@ -379,7 +379,8 @@ function GetUserProfile(){
       OutputData();
       task_completed_getuserprofile = 201;
     }
-    console.log("task_completed:"+task_completed_getuserprofile/2 +"%");
+    //console.log("task_completed:"+task_completed_getuserprofile/2 +"%");
+    $(".modal-text").text("Calculating your relationship. Please be patient.<br/>"+task_completed_getuserprofile/2+"% finished.");
   }
     ,3000);  
 }
