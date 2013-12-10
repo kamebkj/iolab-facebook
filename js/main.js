@@ -3,12 +3,15 @@
 var margin = {top: 100, right: 80, bottom: 80, left: 80},
     width = 960 - margin.left - margin.right,
     height = 700 - margin.top - margin.bottom;
+
 var distance_radius = 250;
+var instance_radius_min = 5;
+var instance_radius_max = 15;
 
 // Initial variables for storing categories
 var arrayTime = ["2013-Q1","2013-Q2","2013-Q3", "2013-Q4"];
 var currentCategory = "relationship-like";
-var currentTime = "2013-Q1";
+var currentTime = 0;
 
 // Add a slider 
 var select = $( "#timerange" );
@@ -18,15 +21,10 @@ var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
   range: "min",
   value: 0,
   slide: function( event, ui ) {
-    // select[ 0 ].selectedIndex = ui.value - 1;
-    // console.log(ui.value);
-    updateTime(arrayTime[ui.value]);
+    currentTime = ui.value;
+    updateTime(arrayTime[currentTime]);
   }
 });
-
-// $( "#minbeds" ).change(function() {
-//   slider.slider( "value", this.selectedIndex + 1 );
-// });
 
 
 // Start drawing
@@ -40,6 +38,8 @@ var feed = [];
 var feedScale;
 var user_feed = [];
 var user_circle;
+var friend_history_circle_g;
+var friend_history_circle;
 var friend_circle_g;
 var friend_circle;
 var friend_name;
@@ -48,75 +48,81 @@ var color = d3.scale.ordinal()
     .range(["#5790BE","#CA5D59"]) 
     .domain(["male","female"]);
 
+// Normalize feed count to draw radius
+// Use feedScale() to normalize 
+for (var i=0; i<arrayTime.length; i++) {
+  user_feed.push(all_data[currentCategory][arrayTime[i]]["user"].feedCount);
+  // push user feedCount
+  feed.push(all_data[currentCategory][arrayTime[i]]["user"].feedCount);
+  // push friend feedCount
+  for (var k=0; k<all_data[currentCategory][arrayTime[i]]["friends"].length; k++) {
+    feed.push(all_data[currentCategory][arrayTime[i]]["friends"][k].feedCount);
+  }
+}
+feedScale = d3.scale.linear()
+  .domain([d3.min(feed), d3.max(feed)])
+  .range([instance_radius_min,instance_radius_max]);
+
 // Add event listener
 // $(".timerange").on("click", function(){
 //   updateTime(this.id);
 // });
-
-$(".category").on("click", function(){
-  updateCategory(this.id);
-});
+// $(".category").on("click", function(){
+//   updateCategory(this.id);
+// });
 
 // First time loading
-// firstTimeGraph();
+drawHistoryCircles();
+firstTimeGraph();
+
+
 
 // Update Functions
 function updateTime(time_num) {
-  // ex. currentTime = "2012-Q1";
-  currentTime = time_num;
   updateGraph();
 }
 
 function updateCategory(category_num) {
-  // ex. currentCategory = "relationship-like";
   currentCategory = category_num;
   updateGraph();
 }
 
 
-function firstTimeGraph() {
+// Drawing functions
 
-  // Normalize feed count to draw radius
-  // Use feedScale() to normalize 
-  feed = [];
-  for (var i=0; i<arrayTime.length; i++) {
-    // push user feedCount
-    feed.push(all_data[currentCategory][arrayTime[i]]["user"].feedCount);
-    // push friend feedCount
-    for (var k=0; k<all_data[currentCategory][arrayTime[i]]["friends"].length; k++) {
-      feed.push(all_data[currentCategory][arrayTime[i]]["friends"][k].feedCount);
-    }
+function drawHistoryCircles() {
+  for (var k=0; k<arrayTime.length; k++) {
+    friend_history_circle_g = svg.selectAll("friend_history_circle_g")
+      .data(all_data[currentCategory][arrayTime[k]]["friends"])
+      .enter().append("g")
+      .attr({
+        "transform": function(d,i) {
+          var x = (distance_radius*(1-d.likeCount/user_feed[k])+2*feedScale(user_feed[k]))*Math.cos((Math.PI*2)/all_data[currentCategory][arrayTime[k]]["friends"].length*(i)) + width/2;
+          var y = (distance_radius*(1-d.likeCount/user_feed[k])+2*feedScale(user_feed[k]))*Math.sin((Math.PI*2)/all_data[currentCategory][arrayTime[k]]["friends"].length*(i)) + height/2;
+          var rotation = 360/all_data[currentCategory][arrayTime[k]]["friends"].length*(i);
+          if (rotation>90 && rotation<270) {
+            rotation = rotation+180;
+            d3.select(this).style("text-anchor", "end");
+          }
+          return "translate("+x+","+y+") rotate("+rotation+")";
+        }
+      });
+      console.log(friend_history_circle_g)
+      friend_history_circle = friend_history_circle_g.append("circle")
+        .attr({
+          "cx": 0,
+          "cy": 0,
+          "r": function(d,i) {
+            return feedScale(d.feedCount);
+          },
+          "fill": function(d,i) {
+            return "#eee";
+          }
+        });
   }
-  feedScale = d3.scale.linear()
-    .domain([d3.min(feed), d3.max(feed)])
-    .range([5,15]);
+}
 
-  // Create User circle data
-  user_feed = [];
-  user_feed.push(all_data[currentCategory][currentTime]["user"].feedCount);
-
-  // Create Friend circle data
-  // Normalize the size and distance of the circles
-  // var friend_feed = [];
-  // var friend_like = [];
-  // var friend_comment = [];
-
-  // for (var i=0; i<data[currentCategory][currentTime]["friend"].length; i++) {
-  //   friend_feed.push(data[currentCategory][currentTime]["friend"][i].feedCount);
-  //   friend_like.push(data[currentCategory][currentTime]["friend"][i].likeCount);
-  //   friend_comment.push(data[currentCategory][currentTime]["friend"][i].commentCount);
-  // };
-  // friend_feed.push(data[currentCategory][currentTime]["user"].feedCount);
-
-  // var feedScale = d3.scale.linear()
-  //   .domain([d3.min(friend_feed), d3.max(friend_feed)])
-  //   .range([5,20]);
-  // var friendLikeScale = d3.scale.linear()
-  //   .domain([d3.min(friend_like), d3.max(friend_like)])
-  //   .range([150,300]);
-  // var friendCommentScale = d3.scale.linear()
-  //   .domain([d3.min(friend_comment), d3.max(friend_comment)])
-  //   .range([150,300]);
+function firstTimeGraph() {
 
   // Draw the circles
   // User circle
@@ -135,18 +141,15 @@ function firstTimeGraph() {
       }
     });
 
-  // Friend circles
-  // currently use like only
-
+  // Friend circles, currently use like only
   friend_circle_g = svg.selectAll("friend_circle_g")
-    .data(all_data[currentCategory][currentTime]["friends"])
+    .data(all_data[currentCategory][arrayTime[currentTime]]["friends"])
     .enter().append("g")
-    // .attr("text-anchor", "middle")
     .attr({
       "transform": function(d,i) {
-        var x = (distance_radius*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.cos((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + width/2;
-        var y = (distance_radius*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.sin((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + height/2;
-        var rotation = 360/all_data[currentCategory][currentTime]["friends"].length*(i);
+        var x = (distance_radius*(1-d.likeCount/user_feed[currentTime])+2*feedScale(user_feed[currentTime]))*Math.cos((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + width/2;
+        var y = (distance_radius*(1-d.likeCount/user_feed[currentTime])+2*feedScale(user_feed[currentTime]))*Math.sin((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + height/2;
+        var rotation = 360/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i);
         if (rotation>90 && rotation<270) {
           rotation = rotation+180;
           d3.select(this).style("text-anchor", "end");
@@ -174,7 +177,7 @@ function firstTimeGraph() {
   friend_name = friend_circle_g.append("text")
     .attr({
       "x": function(d,i) {
-        var rotation = 360/all_data[currentCategory][currentTime]["friends"].length*(i);
+        var rotation = 360/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i);
         if (rotation>90 && rotation<270) return -25;
         else return 25;
       },
@@ -188,23 +191,6 @@ function firstTimeGraph() {
 
 
 function updateGraph() {
-  feed = [];
-  for (var i=0; i<arrayTime.length; i++) {
-    // push user feedCount
-    feed.push(all_data[currentCategory][arrayTime[i]]["user"].feedCount);
-    // push friend feedCount
-    for (var k=0; k<all_data[currentCategory][arrayTime[i]]["friends"].length; k++) {
-      feed.push(all_data[currentCategory][arrayTime[i]]["friends"][k].feedCount);
-    }
-  }
-  feedScale = d3.scale.linear()
-    .domain([d3.min(feed), d3.max(feed)])
-    .range([5,20]);
-
-  // Create User circle data
-  user_feed = [];
-  user_feed.push(all_data[currentCategory][currentTime]["user"].feedCount);
-
 
   // Draw the circles
   // User circle
@@ -232,16 +218,14 @@ function updateGraph() {
       }
     });
 
-  // Friend circles
-  // currently use like only
-
-  friend_circle_g.data(all_data[currentCategory][currentTime]["friends"])
+  // Friend circles, currently use like only
+  friend_circle_g.data(all_data[currentCategory][arrayTime[currentTime]]["friends"])
     .enter().append("g")
     .attr({
       "transform": function(d,i) {
-        var x = (distance_radius*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.cos((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + width/2;
-        var y = (distance_radius*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.sin((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + height/2;
-        var rotation = 360/all_data[currentCategory][currentTime]["friends"].length*(i);
+        var x = (distance_radius*(1-d.likeCount/user_feed[currentTime])+2*feedScale(user_feed[currentTime]))*Math.cos((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + width/2;
+        var y = (distance_radius*(1-d.likeCount/user_feed[currentTime])+2*feedScale(user_feed[currentTime]))*Math.sin((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + height/2;
+        var rotation = 360/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i);
         if (rotation>90 && rotation<270) {
           rotation = rotation+180;
           d3.select(this).style("text-anchor", "end");
@@ -282,9 +266,9 @@ function updateGraph() {
     .duration(400)
     .attr({
       "transform": function(d,i) {
-        var x = (distance_radius*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.cos((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + width/2;
-        var y = (distance_radius*(1-d.likeCount/user_feed[0])+2*feedScale(user_feed[0]))*Math.sin((Math.PI*2)/all_data[currentCategory][currentTime]["friends"].length*(i)) + height/2;
-        var rotation = 360/all_data[currentCategory][currentTime]["friends"].length*(i);
+        var x = (distance_radius*(1-d.likeCount/user_feed[currentTime])+2*feedScale(user_feed[currentTime]))*Math.cos((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + width/2;
+        var y = (distance_radius*(1-d.likeCount/user_feed[currentTime])+2*feedScale(user_feed[currentTime]))*Math.sin((Math.PI*2)/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i)) + height/2;
+        var rotation = 360/all_data[currentCategory][arrayTime[currentTime]]["friends"].length*(i);
         if (rotation>90 && rotation<270) {
           rotation = rotation+180;
           d3.select(this).style("text-anchor", "end");
