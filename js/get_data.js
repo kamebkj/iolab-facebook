@@ -229,6 +229,9 @@ function OutputData(){
   console.log(facebook_data);
   all_data = facebook_data;
 
+
+  console.log("done");
+  $("body").removeClass("loading"); 
   // var s = JSON.stringify(all_data)
   // $("html").text(s);
   firstTimeGraph();
@@ -447,6 +450,9 @@ function GetTopUser(){
 }
 
 function GetFeed() {
+  console.log("start");
+  $("body").addClass("loading");
+
   var task_completed_getfeed = 0;
   FB.login(function(response){
     FB.api("/me?fields=id,name,gender",

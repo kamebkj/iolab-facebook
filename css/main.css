@@ -14,3 +14,33 @@ body {
 	padding-right: 95px;
 	display: inline;
 }
+
+
+/* Loading indicator */
+
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('../image/indicator.gif') 
+                50% 50% 
+                no-repeat;
+}
+.modal .modal-text {
+	position: absolute;
+	top: 40%;
+	left: 43.5%;
+}
+
+body.loading {
+    overflow: hidden;   
+}
+
+body.loading .modal {
+    display: block;
+}
