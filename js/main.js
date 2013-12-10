@@ -49,6 +49,10 @@ var color = d3.scale.ordinal()
     .range(["#5790BE","#CA5D59"]) 
     .domain(["male","female"]);
 
+var colorStroke = d3.scale.ordinal()
+    .range(["#1C507C","#83201D"]) 
+    .domain(["male","female"]);
+
 // Create tooltips for hover use
 var tooltip = d3.select("body").append("div") 
     .attr("class", "tooltip")       
@@ -111,6 +115,22 @@ function initialize() {
 }
 
 function drawHistoryCircles() {
+  // User circle
+  user_circle = svg.selectAll("user_circle")
+    .data(user_feed)
+    .enter().append("circle")
+    .attr({
+      "cx": width/2,
+      "cy": height/2,
+      "r": function(d,i) {
+        return feedScale(d);
+      },
+      "fill": function(d,i) {
+        return "#eee";
+      }
+    });
+
+  // Friend circle
   for (var k=0; k<arrayTime.length; k++) {
     friend_history_circle_g = svg.selectAll("friend_history_circle_g")
       .data(all_data[currentCategory][arrayTime[k]]["friends"])
@@ -155,7 +175,7 @@ function firstTimeGraph() {
   // Draw the circles
   // User circle
   user_circle = svg.selectAll("user_circle")
-    .data(user_feed)
+    .data([user_feed[currentTime]])
     .enter().append("circle")
     .attr({
       "cx": width/2,
@@ -166,7 +186,28 @@ function firstTimeGraph() {
       "fill": function(d,i) {
         if (typeof all_data["user"].gender!=="undefined") return color(all_data["user"].gender);
         else return "#ccc";
-      }
+      },
+      "stroke": function(d,i) {
+        if (typeof all_data["user"].gender!=="undefined") return colorStroke(all_data["user"].gender);
+        else return "#ccc";
+      },
+      "stroke-width": "2px"
+    })
+    .on("mouseover", function(d,i) {
+      d3.select(this).style("opacity",0.6);
+      d3.select(this).style("cursor", "pointer");
+      tooltip.transition()
+        .duration(200)
+        .style("opacity", 0.95);
+      tooltip.html(all_data["user"].name+"<br/>"+"Feed: "+d)
+        .style("left", (d3.event.pageX)+"px")
+        .style("top", (d3.event.pageY - 20)+"px")
+    })
+    .on("mouseout", function(d,i) {
+      d3.select(this).style("opacity",1.0);
+      tooltip.transition()
+        .duration(200)
+        .style("opacity", 0);
     });
 
   // Friend circles, currently use like only
@@ -204,7 +245,7 @@ function firstTimeGraph() {
       tooltip.transition()
         .duration(200)
         .style("opacity", 0.95);
-      tooltip.html(d.name+"<br/>"+"Like:"+d.likeCount+"<br/>"+"Comment:"+d.commentCount+"<br/>"+"Feed:"+d.feedCount)
+      tooltip.html(d.name+"<br/>"+"Like: "+d.likeCount+" / "+user_feed[currentTime]+"<br/>"+"Comment: "+d.commentCount+" / "+user_feed[currentTime]+"<br/>"+"Feed: "+d.feedCount)
         .style("left", (d3.event.pageX)+"px")
         .style("top", (d3.event.pageY - 20)+"px")
     })
@@ -235,7 +276,7 @@ function updateGraph() {
 
   // Draw the circles
   // User circle
-  user_circle.data(user_feed)
+  user_circle.data([user_feed[currentTime]])
     .enter().append("circle")
     .attr({
       "cx": width/2,
@@ -247,6 +288,22 @@ function updateGraph() {
         if (typeof all_data["user"].gender!=="undefined") return color(all_data["user"].gender);
         else return "#ccc";
       }
+    })
+    .on("mouseover", function(d,i) {
+      d3.select(this).style("opacity",0.6);
+      d3.select(this).style("cursor", "pointer");
+      tooltip.transition()
+        .duration(200)
+        .style("opacity", 0.95);
+      tooltip.html(all_data["user"].name+"<br/>"+"Feed: "+d)
+        .style("left", (d3.event.pageX)+"px")
+        .style("top", (d3.event.pageY - 20)+"px")
+    })
+    .on("mouseout", function(d,i) {
+      d3.select(this).style("opacity",1.0);
+      tooltip.transition()
+        .duration(200)
+        .style("opacity", 0);
     });
 
   user_circle.transition()
@@ -293,7 +350,7 @@ function updateGraph() {
       tooltip.transition()
         .duration(200)
         .style("opacity", 0.95);
-      tooltip.html(d.name+"<br/>"+"Like:"+d.likeCount+"<br/>"+"Comment:"+d.commentCount+"<br/>"+"Feed:"+d.feedCount)
+      tooltip.html(d.name+"<br/>"+"Like: "+d.likeCount+" / "+user_feed[currentTime]+"<br/>"+"Comment: "+d.commentCount+" / "+user_feed[currentTime]+"<br/>"+"Feed: "+d.feedCount)
         .style("left", (d3.event.pageX)+"px")
         .style("top", (d3.event.pageY - 20)+"px")
     })
