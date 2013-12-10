@@ -4,15 +4,25 @@ body {
   background-color: #ccc;*/
 }
 
+/* svg */
+#viz-container svg {
+	display: block;
+	margin: auto;
+	font-size: 0.8em;
+}
+
 /* Timerange slider */
 #slider {
 	width: 500px;
-	margin-top: 50px;
-	margin-left: 50px;
+	margin: 50px auto 20px;
 }
-
+#timerange-label ul{
+	text-align: center;
+	margin: auto;
+	padding-left: 100px;
+}
 #timerange-label ul li{
-	padding-right: 95px;
+	padding-right: 110px;
 	display: inline;
 }
 
