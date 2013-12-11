@@ -21,18 +21,18 @@ function getFriend(Q_Y,i){
     gender: 0,
     likeCount: 0,
     commentCount: 0,
-    feedCount: 0 
+    feedCount: 0
   };
   console.log(Q_Y,i,user_profile[i]);
   friend["id"] = user_profile[i].id;
   friend["name"] = user_profile[i].name;
   friend["gender"] = user_profile[i].gender;
   if ((Q_Y+"_like") in user_profile[i]){
-    friend["likeCount"] = user_profile[i][Q_Y+"_like"]; 
+    friend["likeCount"] = user_profile[i][Q_Y+"_like"];
   }
   if ((Q_Y+"_comment") in user_profile[i]){
     friend["commentCount"] = user_profile[i][Q_Y+"_comment"];
-  }  
+  }
   if ((Q_Y+"_feedcount") in user_profile[i]){
     friend["feedCount"] = user_profile[i][Q_Y+"_feedcount"];
   }
@@ -72,7 +72,7 @@ function OutputData(){
   }
   Q4_2013 = {
     "user": user_feed,
-    "friends": friends 
+    "friends": friends
   };
   friends = [];
 
@@ -92,8 +92,8 @@ function OutputData(){
   }
   Q3_2013 = {
     "user": user_feed,
-    "friends": friends 
-  };   
+    "friends": friends
+  };
   friends = [];
 
  //Q2 2013
@@ -111,8 +111,8 @@ function OutputData(){
   }
   Q2_2013 = {
     "user": user_feed,
-    "friends": friends 
-  };   
+    "friends": friends
+  };
   friends = [];
 
  //Q1 2013
@@ -130,8 +130,8 @@ function OutputData(){
   }
   Q1_2013 = {
     "user": user_feed,
-    "friends": friends 
-  };   
+    "friends": friends
+  };
   friends = [];
 /*
  //Q4 2012
@@ -149,8 +149,8 @@ function OutputData(){
   }
   Q4_2012 = {
     "user": user_feed,
-    "friends": friends 
-  };   
+    "friends": friends
+  };
   friends = [];
  //Q3 2012
   for (var i=0; i < user_profile.length; i++){
@@ -167,8 +167,8 @@ function OutputData(){
   }
   Q3_2012 = {
     "user": user_feed,
-    "friends": friends 
-  };   
+    "friends": friends
+  };
   friends = [];
  //Q2 2012
   for (var i=0; i < user_profile.length; i++){
@@ -185,8 +185,8 @@ function OutputData(){
   }
   Q2_2012 = {
     "user": user_feed,
-    "friends": friends 
-  };   
+    "friends": friends
+  };
   friends = [];
  //Q1 2012
   for (var i=0; i < user_profile.length; i++){
@@ -203,8 +203,8 @@ function OutputData(){
   }
   Q1_2012 = {
     "user": user_feed,
-    "friends": friends 
-  };   
+    "friends": friends
+  };
   friends = [];
 
 */
@@ -218,7 +218,7 @@ function OutputData(){
     "2012-Q4": Q4_2012,
     "2012-Q3": Q3_2012,
     "2012-Q2": Q2_2012,
-    "2012-Q1": Q1_2012  
+    "2012-Q1": Q1_2012
     */
   };
   facebook_data = {
@@ -231,7 +231,7 @@ function OutputData(){
 
 
   console.log("done");
-  $("body").removeClass("loading"); 
+  $("body").removeClass("loading");
   $("#get-data-btn button").hide();
   $("#slider").show();
   $("#timerange-label").show();
@@ -357,7 +357,7 @@ function GetUserProfile(){
             }
           }
         }
-      } 
+      }
     }
     for (var j = 0; j<user_profile.length; j++){
       for (key in user_comments_stack){
@@ -368,7 +368,7 @@ function GetUserProfile(){
             }
           }
         }
-      } 
+      }
     }
 
   }
@@ -382,7 +382,7 @@ function GetUserProfile(){
     //console.log("task_completed:"+task_completed_getuserprofile/2 +"%");
     $(".modal-text").html("Calculating your relationship. Please be patient.<br/>"+task_completed_getuserprofile/2+"% finished.");
   }
-    ,3000);  
+    ,3000);
 }
 
 
@@ -433,11 +433,11 @@ function GetTopUser(){
           gender: response.gender,
           name: response.name
         });
-//          console.log(user_profile); 
-        task_completed_gettopuser += 1;           
+//          console.log(user_profile);
+        task_completed_gettopuser += 1;
       }
     );
-  }  
+  }
 
 
 
@@ -470,7 +470,7 @@ function GetFeed() {
         console.log(my_profile);
       }
 
-    );   
+    );
     //Q4 2013
     FB.api("/me/posts?fields=likes.limit(300).fields(id),comments.limit(100).fields(from),created_time,message,type&until=31 Dec 2013&since=1 Oct 2013&limit=1000",
       function (response){
@@ -515,10 +515,10 @@ function GetFeed() {
         console.log(user_feedcount_stack);
         task_completed_getfeed += 1;
       }
-      
+
     );
 
-                
+
     FB.api("/me/posts?fields=likes.limit(300).fields(id),comments.limit(100).fields(from),created_time,message,type&until=31 Sep 2013&since=1 Jul 2013&limit=1000",
       function (response){
 //        console.log(response);
@@ -562,7 +562,7 @@ function GetFeed() {
         console.log(user_feedcount_stack);
         task_completed_getfeed += 1;
       }
-      
+
     );
     //Q2 2013
     FB.api("/me/posts?fields=likes.limit(300).fields(id),comments.limit(100).fields(from),created_time,message,type&until=30 Jun 2013&since=1 Apr 2013&limit=1000",
@@ -608,7 +608,7 @@ function GetFeed() {
         console.log(user_feedcount_stack);
         task_completed_getfeed += 1;
       }
-      
+
     );
     //Q1 2013
     FB.api("/me/posts?fields=likes.limit(300).fields(id),comments.limit(100).fields(from),created_time,message,type&until=31 Mar 2013&since=1 Jan 2013&limit=1000",
@@ -699,7 +699,7 @@ function GetFeed() {
         console.log(user_comments_stack);
         console.log(user_feedcount_stack);
         task_completed_getfeed += 1;
-      }      
+      }
     );
     //Q3 2012
     FB.api("/me/posts?fields=likes.limit(300).fields(id),comments.limit(100).fields(from),created_time,message,type&until=30 Sep 2012&since=1 Jul 2012&limit=1000",
@@ -744,7 +744,7 @@ function GetFeed() {
         console.log(user_comments_stack);
         console.log(user_feedcount_stack);
         task_completed_getfeed += 1;
-      }      
+      }
     );
     //Q2 2012
     FB.api("/me/posts?fields=likes.limit(300).fields(id),comments.limit(100).fields(from),created_time,message,type&until=30 Jun 2012&since=1 Apr 2012&limit=1000",
@@ -789,7 +789,7 @@ function GetFeed() {
         console.log(user_comments_stack);
         console.log(user_feedcount_stack);
         task_completed_getfeed += 1;
-      }      
+      }
     );
     //Q1 2012
     FB.api("/me/posts?fields=likes.limit(300).fields(id),comments.limit(100).fields(from),created_time,message,type&until=31 Mar 2012&since=1 Jan 2012&limit=1000",
@@ -834,7 +834,7 @@ function GetFeed() {
         console.log(user_comments_stack);
         console.log(user_feedcount_stack);
         task_completed_getfeed += 1;
-      }      
+      }
     );
 */
   }, {scope: 'read_stream'});
