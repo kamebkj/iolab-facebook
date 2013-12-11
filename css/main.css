@@ -58,8 +58,11 @@ body {
 
 #side-nav p {
     width: 350px;
-    margin-left: 2%;
+    margin-left: 3%;
+    font-family: 'Tahoma', sans-serif;
+    line-height: 22px;
 }
+
 
 #get-data-btn button {
     background-color:#637aad;
@@ -97,8 +100,13 @@ body {
 
 #viz-container {
     margin-top: -660px;
-    background-color: #F00;
 }
+
+#front-page-img {
+    margin-top: -310px;
+    margin-left: 600px;
+}
+
 
 #viz-container svg {
     margin-top: -130px;
