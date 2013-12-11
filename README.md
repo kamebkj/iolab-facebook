@@ -12,10 +12,10 @@ We acquire the user's 1-year-worth of feed data from Facebook's Graph API, and a
 
 =====
 Team Members and Roles
-- Derek Kuo : 
-- Kate Hsiao :
-- Shaohan Chen :
-- Kelly Park :
+- Derek Kuo : Facebook API and data crawling
+- Kate Hsiao : Data visualization and implementation
+- Shaohan Chen : UI implementation and graphics 
+- Kelly Park : UI design, graphics and documentation
 
 =====
 Technologies used
