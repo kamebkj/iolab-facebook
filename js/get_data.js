@@ -459,6 +459,7 @@ function GetFeed() {
   $("body").addClass("loading");
 
   $("#get-data-btn").remove();
+  $("#front-page-img").remove();
   $("#legend").append("<img src='image/legend.png' alt='legend' width='300px'>");
 
   var task_completed_getfeed = 0;
