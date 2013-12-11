@@ -2,7 +2,7 @@ IO Lab Final Project
 
 =====
 Project Title
-Your True Friendship Organizer 
+Your Friendship Organizer 
 - Who likes me the most?
 
 =====
@@ -12,19 +12,19 @@ We acquire the user's 1-year-worth of feed data from Facebook's Graph API, and a
 
 =====
 Team Members and Roles
-- Derek Kuo : Facebook API and data crawling
-- Kate Hsiao : Data visualization and implementation
-- Shaohan Chen : UI implementation and graphics 
-- Kelly Park : UI design, graphics and documentation
+- Derek Kuo : accessing and getting the data 
+- Kate Hsiao : design, building the visualization
+- Shaohan Chen : design, html, css, beautifying
+- Kelly Park : design, html, presentati on
 
 =====
 Technologies used
 - html, css, javascript, jquery, D3.js
-- 
+
 =====
 Link to demo version
 - http://people.ischool.berkeley.edu/~katehsiao/iolab-facebook/
 
 =====
 Known Bugs
-- 
+- loading time and possible error on obtaining the data
