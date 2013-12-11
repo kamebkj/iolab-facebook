@@ -3,12 +3,20 @@ body {
 }
 
 
+#side-nav {
+    min-width: 350px;
+}
+
+#logo img {
+    margin-left: 9%;
+}
+
 #logo h1 {
-    font-family: monospace, serif;
+    font-family: 'lucida grande', serif;
     color: #353535;
     margin-left: 1%;
-    margin-top: 50px;
-    margin-bottom: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 
     /* Slide-in Effect */
     -moz-animation-duration: 2s;
@@ -48,6 +56,11 @@ body {
     }
 }
 
+#side-nav p {
+    width: 350px;
+    margin-left: 2%;
+}
+
 #get-data-btn button {
     background-color:#637aad;
     -moz-border-radius:30px;
@@ -61,7 +74,7 @@ body {
     padding:16px 31px;
     text-decoration: none;
     text-shadow:0px 1px 0px #7a8eb9;
-    margin-top: 5px;
+    margin-top: 30px;
     margin-left: 10%;
 }
 
@@ -73,6 +86,11 @@ body {
     position:relative;
     top:1px;
 }
+
+#legend {
+    margin-left: 4%;
+}
+
 
 
 /* svg */
@@ -141,6 +159,7 @@ body {
                 url('../image/indicator.gif')
                 50% 50%
                 no-repeat;
+
 }
 .modal .modal-text {
 	position: absolute;

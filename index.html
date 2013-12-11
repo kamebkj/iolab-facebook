@@ -12,19 +12,22 @@
 
 	<div id="side-nav">
 		<div id="logo">
-			<br/>
-			<img src="image/like-icon.png" alt="like-icon">
 			<div id="fb-root"></div>
 				<fb:login-button autologoutlink="true" onlogin="OnRequestPermission();">
 				</fb:login-button> <br/>
+			<img src="image/like-icon.png" alt="like-icon" width="150px">
 			<h1>Who likes me the most?</h1>
-
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris venenatis arcu libero, ac consequat velit hendrerit nec. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur gravida feugiat nibh ut ultrices.</p>
 		</div>
 
 
-		<div id="get-data-btn"> 
+		<div id="get-data-btn">
+<!--		 <button onclick="GetFeed()" style="display: none">Get Data</button> -->
 		 	<button onclick="GetFeed()">Get Data</button>
-		 	<div id="legend"></div>
+<!--		<div id="legend"> -->
+		 	<div id="legend" style="display: none">
+		 		<img src="image/legend.png" alt="legend" width="300px">
+		 	</div>
 		</div><!-- /get-data-btn -->
 
 		<div id="timerange"></div>
