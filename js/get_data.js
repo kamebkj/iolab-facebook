@@ -458,6 +458,9 @@ function GetFeed() {
   console.log("start");
   $("body").addClass("loading");
 
+  $("#get-data-btn").remove();
+  $("#legend").append("<img src='image/legend.png' alt='legend' width='300px'>");
+
   var task_completed_getfeed = 0;
   FB.login(function(response){
     FB.api("/me?fields=id,name,gender",
