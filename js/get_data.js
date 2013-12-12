@@ -375,7 +375,7 @@ function GetUserProfile(){
   setInterval(function()
   {
     //console.log("task_completed_getuserprofile",task_completed_getuserprofile);
-    if (task_completed_getuserprofile > 197 && task_completed_getuserprofile <= 200){
+    if (task_completed_getuserprofile > 194 && task_completed_getuserprofile <= 200){
       OutputData();
       task_completed_getuserprofile = 201;
     }
